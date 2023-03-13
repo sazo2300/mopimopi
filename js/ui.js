@@ -10,7 +10,6 @@ var sVal = {
         old: 0 
     }    
 history.pushState(null, null, location.href);
-document.getElementsByTagName('body')[0].style.backgroundColor = rgba(0,0,0,0.5);
 window.onpopstate = function() {
     history.go(1)
 }
@@ -87,7 +86,7 @@ function initOverlay(val) {
     resizeWindow(view)
     hiddenTable()
     if (init.q.arrow)
-        $('#wrap').css({ 'background-image': 'url(./images/handle.svg)' })
+        $('#wrap').css({ 'background-image': 'url(./images/handle.svg)', "background-color": "rgba(0,0,0,0.5)" })
     ui()
 }
 $('.scrollArea').scroll(function() {
