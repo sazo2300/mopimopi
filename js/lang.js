@@ -3602,17 +3602,6 @@ l = {
             e: "li_2line_checkbox_normal",
             ul: 1
         },
-        backgroundColor: {
-            tt: {
-                EN: "Background Color",
-            },
-            m: {
-                EN: "Enable a transparent dark background around the window",
-            },
-            i: "color_on",
-            e: "li_2line_checkbox_normal",
-            ul: 1
-        },
         autoHideTime: {
             tt: {
                 KR: "대기 시간",
@@ -3733,6 +3722,17 @@ l = {
             i: "burst_mode",
             p: "Overlay",
             ul: 0
+        },
+        backgroundColor: {
+            tt: {
+                EN: "Background Color",
+            },
+            m: {
+                EN: "Enable a transparent dark background around the window",
+            },
+            i: "color_on",
+            e: "li_2line_checkbox_normal",
+            ul: 1
         },
         arrow: {
             tt: {
