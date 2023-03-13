@@ -930,7 +930,6 @@ function addOverallData(){
         td.innerText = 1;
     else {
         if (encounterArray[0].lastDPS.Encounter.CurrentZoneName == encounterArray[1].lastDPS.Encounter.CurrentZoneName) {
-            encounterCount++;
             td.innerText = addComma(parseInt(encounterCount))
         } else {
             encounterCount = 1;
