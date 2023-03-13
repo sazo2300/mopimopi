@@ -813,7 +813,7 @@ function historyAddRow() {
     if (oldHistory == null)
         wrap.appendChild(newHistory);
     else wrap.insertBefore(newHistory, oldHistory);
-    if(newHistory2) wrap.insertBefore(newHistory2, oldHistory)
+    if(newHistory2) wrap.insertAfter(newHistory2, oldHistory)
     newHistory.id = 'HISTORYoldBody';
     $('#HISTORYBody .tableWrap').on({
         mouseover: function() {
