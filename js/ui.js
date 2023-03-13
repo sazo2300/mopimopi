@@ -19,6 +19,9 @@ $().ready(function() {
         localStorage.setItem("Mopi2_HAERU", JSON.stringify(Mopi2))
     }
     init = JSON.parse(localStorage.getItem("Mopi2_HAERU"))
+    if(init.q.backgroundColor == null){
+        init.q.backgroundColor = 0;
+    }
     addOption()
     lang = init.q.Lang 
     initOverlay()

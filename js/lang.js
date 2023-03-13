@@ -3727,11 +3727,8 @@ l = {
             tt: {
                 EN: "Background Color",
             },
-            m: {
-                EN: "Enable a transparent dark background around the window",
-            },
-            i: "color_on",
-            e: "li_2line_checkbox_normal",
+            i: "signal_cellular_4_bar",
+            e: "li_checkbox",
             ul: 1
         },
         arrow: {
