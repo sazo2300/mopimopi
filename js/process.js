@@ -70,34 +70,94 @@ function update(lastDPS, lastHPS) {
             lastHPS.AttachPets();
             lastHPS.resort("mergedHealed", 1)
         }
-    }
-    if (init.q.act == 2) {
-        $('nav table[name=ACT_2line]').fadeIn(0)
-        $('nav table[name=ACT_1line]').fadeOut(0)
+        if (init.q.act == 2) {
+            $('nav table[name=ACT_2line]').fadeIn(0)
+            $('nav table[name=ACT_1line]').fadeOut(0)
+        } else {
+            $('nav table[name=ACT_2line]').fadeOut(0)
+            $('nav table[name=ACT_1line]').fadeIn(0)
+        }    
+        $('[name=target]').text(lastDPS.Encounter.title)
+        $('[name=time]').text(lastDPS.Encounter.duration)
+        if (init.q.tableOrder == 1)
+            $('div[name=main' + _ + ']').html('<div id="DPSHeader' + _ + '"><div id="DPSoldHeader' + _ + '"></div></div><div id="DPSBody' + _ + '"><div id="DPSoldBody' + _ + '"></div></div><div id="HPSHeader' + _ + '"><div id="HPSoldHeader' + _ + '"></div></div><div id="HPSBody' + _ + '"><div id="HPSoldBody' + _ + '"></div></div>')
+        else
+            $('div[name=main' + _ + ']').html('<div id="HPSHeader' + _ + '"><div id="HPSoldHeader' + _ + '"></div></div><div id="HPSBody' + _ + '"><div id="HPSoldBody' + _ + '"></div></div><div id="DPSHeader' + _ + '"><div id="DPSoldHeader' + _ + '"></div></div><div id="DPSBody' + _ + '"><div id="DPSoldBody' + _ + '"></div></div>')
+            
+        if (lastDPS.Combatant["YOU"] == undefined && lastDPS.Combatant["YOU"] == null) {        
+            $('[name=rps]').text(l.NAV.main.tt.rps[lang])
+        } else {
+            var rd = "Total DPS " + addComma(lastDPS.Encounter.ENCDPS) + "　"
+            var rh = "Total HPS " + addComma(lastHPS.Encounter.ENCHPS) + "　"
+            var md = "My DPS " + addComma(lastDPS.Combatant.YOU.encdps) + "　"
+            var mh = "My HPS " + addComma(lastHPS.Combatant.YOU.enchps) + "　"
+            var rk = "Rank " + parseInt(lastDPS.Combatant.YOU.rank + 1) + "/" + parseInt(lastHPS.Combatant.YOU.rank + 1) + "/" + lastDPS.partys + "　"
+            var msg = ''
+            if (init.q.swap == 0)
+                var max = '<span name="swapBtn">MaxHit </span>' + addData('maxhit', null, lastDPS.Combatant.YOU).replace('<font class="ex">', '').replace("</font>", '')
+            else
+                var max = '<span name="swapBtn">MaxHeal </span>' + addData('maxheal', null, lastHPS.Combatant.YOU).replace('<font class="ex">', '').replace("</font>", '')
+            if (init.q.act_rd) msg += rd
+            if (init.q.act_rh) msg += rh
+            if (init.q.act_md) msg += md
+            if (init.q.act_mh) msg += mh
+            if (init.q.act_rank) msg += rk
+            if (init.q.act_max) msg += max.replace('<font class="ex">', '').replace("</font>", '')
+    
+            $('[name=rps]').html(msg)
+            $('[name=swapBtn]').on({
+                click: function() {
+                    if (init.q.swap == 0) {
+                        init.q.swap = 1
+                    } else {
+                        init.q.swap = 0
+                    }                
+                    localStorage.setItem('Mopi2_HAERU', JSON.stringify(init))
+                    update(lastDPS, lastHPS)
+                },
+                mouseover: function() {
+                    $(this).css({ color: '#' + init.Color.accent })
+                },
+                mouseleave: function() {
+                    $(this).css({ color: '' })
+                },
+            })
+            if ((lastDPS.partys >= init.q.view24_Number && init.q.view24) || view == 'preview24') {
+                if (init.q.viewDPS == 1)
+                    onRaidCombatDataUpdate('DPS', lastDPS)
+                if (init.q.viewHPS == 1)
+                    onRaidCombatDataUpdate('HPS', lastHPS)
+            } else {            
+                if (init.q.viewDPS == 1)
+                    onCombatDataUpdate('DPS', lastDPS)
+                if (init.q.viewHPS == 1)
+                    onCombatDataUpdate('HPS', lastHPS)
+            }
+        }    
     } else {
-        $('nav table[name=ACT_2line]').fadeOut(0)
-        $('nav table[name=ACT_1line]').fadeIn(0)
-    }    
-    $('[name=target]').text(lastDPS.Encounter.title)
-    $('[name=time]').text(lastDPS.Encounter.duration)
-    if (init.q.tableOrder == 1)
-        $('div[name=main' + _ + ']').html('<div id="DPSHeader' + _ + '"><div id="DPSoldHeader' + _ + '"></div></div><div id="DPSBody' + _ + '"><div id="DPSoldBody' + _ + '"></div></div><div id="HPSHeader' + _ + '"><div id="HPSoldHeader' + _ + '"></div></div><div id="HPSBody' + _ + '"><div id="HPSoldBody' + _ + '"></div></div>')
-    else
-        $('div[name=main' + _ + ']').html('<div id="HPSHeader' + _ + '"><div id="HPSoldHeader' + _ + '"></div></div><div id="HPSBody' + _ + '"><div id="HPSoldBody' + _ + '"></div></div><div id="DPSHeader' + _ + '"><div id="DPSoldHeader' + _ + '"></div></div><div id="DPSBody' + _ + '"><div id="DPSoldBody' + _ + '"></div></div>')
-        
-    if (lastDPS.Combatant["YOU"] == undefined && lastDPS.Combatant["YOU"] == null) {        
-        $('[name=rps]').text(l.NAV.main.tt.rps[lang])
-    } else {
+        if (init.q.act == 2) {
+            $('nav table[name=ACT_2line]').fadeIn(0)
+            $('nav table[name=ACT_1line]').fadeOut(0)
+        } else {
+            $('nav table[name=ACT_2line]').fadeOut(0)
+            $('nav table[name=ACT_1line]').fadeIn(0)
+        }    
+        $('[name=target]').text(lastDPS.Encounter.title)
+        $('[name=time]').text(lastDPS.Encounter.duration)
+        if (init.q.tableOrder == 1)
+            $('div[name=main' + _ + ']').html('<div id="DPSHeader' + _ + '"><div id="DPSoldHeader' + _ + '"></div></div><div id="DPSBody' + _ + '"><div id="DPSoldBody' + _ + '"></div></div><div id="HPSHeader' + _ + '"><div id="HPSoldHeader' + _ + '"></div></div><div id="HPSBody' + _ + '"><div id="HPSoldBody' + _ + '"></div></div>')
+        else
+            $('div[name=main' + _ + ']').html('<div id="HPSHeader' + _ + '"><div id="HPSoldHeader' + _ + '"></div></div><div id="HPSBody' + _ + '"><div id="HPSoldBody' + _ + '"></div></div><div id="DPSHeader' + _ + '"><div id="DPSoldHeader' + _ + '"></div></div><div id="DPSBody' + _ + '"><div id="DPSoldBody' + _ + '"></div></div>')
         var rd = "Total DPS " + addComma(lastDPS.Encounter.ENCDPS) + "　"
         var rh = "Total HPS " + addComma(lastHPS.Encounter.ENCHPS) + "　"
-        var md = "My DPS " + addComma(lastDPS.Combatant.YOU.encdps) + "　"
-        var mh = "My HPS " + addComma(lastHPS.Combatant.YOU.enchps) + "　"
-        var rk = "Rank " + parseInt(lastDPS.Combatant.YOU.rank + 1) + "/" + parseInt(lastHPS.Combatant.YOU.rank + 1) + "/" + lastDPS.partys + "　"
+        var md = "My DPS " + addComma(lastDPS.persons.YOU.encdps) + "　"
+        var mh = "My HPS " + addComma(lastHPS.persons.YOU.enchps) + "　"
+        var rk = "Rank " + parseInt(lastDPS.persons.YOU.rank + 1) + "/" + parseInt(lastHPS.persons.YOU.rank + 1) + "　"
         var msg = ''
         if (init.q.swap == 0)
-            var max = '<span name="swapBtn">MaxHit </span>' + addData('maxhit', null, lastDPS.Combatant.YOU).replace('<font class="ex">', '').replace("</font>", '')
+            var max = '<span name="swapBtn">MaxHit </span>' + addData('maxhit', null, lastDPS.persons.YOU).replace('<font class="ex">', '').replace("</font>", '')
         else
-            var max = '<span name="swapBtn">MaxHeal </span>' + addData('maxheal', null, lastHPS.Combatant.YOU).replace('<font class="ex">', '').replace("</font>", '')
+            var max = '<span name="swapBtn">MaxHeal </span>' + addData('maxheal', null, lastHPS.persons.YOU).replace('<font class="ex">', '').replace("</font>", '')
         if (init.q.act_rd) msg += rd
         if (init.q.act_rh) msg += rh
         if (init.q.act_md) msg += md
@@ -123,7 +183,7 @@ function update(lastDPS, lastHPS) {
                 $(this).css({ color: '' })
             },
         })
-        if ((lastDPS.partys >= init.q.view24_Number && init.q.view24) || view == 'preview24') {
+        if (view == 'preview24') {
             if (init.q.viewDPS == 1)
                 onRaidCombatDataUpdate('DPS', lastDPS)
             if (init.q.viewHPS == 1)
@@ -134,7 +194,7 @@ function update(lastDPS, lastHPS) {
             if (init.q.viewHPS == 1)
                 onCombatDataUpdate('HPS', lastHPS)
         }
-    }    
+    }
     ui()
 }
 function onRaidCombatDataUpdate(flag, last) {
