@@ -654,6 +654,12 @@ function historyAddRow() {
         } else {
             encounterCount = 1;
             td.innerText = encounterCount
+
+            //Handle overall
+            let estimatedOverallHTML = wrap.querySelectorAll(`[id^="${lastDPS.zone}"]`)
+            for(let res of estimatedOverallHTML){
+                res.id = "Done_" + res.id
+            }
         }
     }
     var barBg = document.createElement("div");
@@ -664,7 +670,7 @@ function historyAddRow() {
         wrap.appendChild(newHistory);
     else wrap.insertBefore(newHistory, oldHistory);
     newHistory.id = 'HISTORYoldBody';
-    console.log(wrap.querySelector(`[id^="${lastDPS.zone}"]`))
+    console.log(wrap)
     $('#HISTORYBody .tableWrap').on({
         mouseover: function() {
             if (init.Range.bar == 0)
