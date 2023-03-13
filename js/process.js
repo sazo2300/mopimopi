@@ -54,20 +54,22 @@ function update(lastDPS, lastHPS) {
         _ = '_P'
     } else
         _ = ''        
-    if (init.q.pets == 0) {
-        lastDPS.summonerMerge = false;
-        lastDPS.DetachPets();
-        lastDPS.resort("damage", 1);
-        lastHPS.summonerMerge = false;
-        lastHPS.DetachPets();
-        lastHPS.resort("healed", 1)
-    } else {
-        lastDPS.summonerMerge = true;
-        lastDPS.AttachPets();
-        lastDPS.resort("mergedDamage", 1);
-        lastHPS.summonerMerge = true;
-        lastHPS.AttachPets();
-        lastHPS.resort("mergedHealed", 1)
+    if(!lastDPS.overallData){
+        if (init.q.pets == 0) {
+            lastDPS.summonerMerge = false;
+            lastDPS.DetachPets();
+            lastDPS.resort("damage", 1);
+            lastHPS.summonerMerge = false;
+            lastHPS.DetachPets();
+            lastHPS.resort("healed", 1)
+        } else {
+            lastDPS.summonerMerge = true;
+            lastDPS.AttachPets();
+            lastDPS.resort("mergedDamage", 1);
+            lastHPS.summonerMerge = true;
+            lastHPS.AttachPets();
+            lastHPS.resort("mergedHealed", 1)
+        }
     }
     if (init.q.act == 2) {
         $('nav table[name=ACT_2line]').fadeIn(0)
@@ -725,7 +727,7 @@ function addOverallData(){
             break;
         }
     }
-    let resObj = { lastDPS: {Encounter: {}}, lastHPS: {Encounter: {}}}
+    let resObj = { lastDPS: {Encounter: {}, overallData: true}, lastHPS: {Encounter: {}, overallData: true}}
     let dontTouch = {}
     if(relevantEncounters.length > 0) dontTouch = relevantEncounters[0]
     resObj.lastDPS = populateOuterObjects(resObj.lastDPS, dontTouch.lastDPS, true)
