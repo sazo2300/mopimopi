@@ -726,22 +726,18 @@ function addOverallData(){
     ]
     console.log("init obj: ", JSON.parse(JSON.stringify(resObj)))
     for(let i = 1; i < relevantEncounters.length; i++){
-        for (const [key, value] of Object.entries(resObj.lastDPS.Encounter)) {
-            resObj.lastDPS.Encounter[key] = value + relevantEncounters[i].lastDPS.Encounter[key]
-          }
-        for(let person of resObj.lastDPS.persons){
-            for (const [key, value] of Object.entries(resObj.lastDPS.persons[person])) {
-                resObj.lastDPS.persons[person][key] = value + relevantEncounters[i].lastDPS.persons[person][key]
-              }
-        }
-        for (const [key, value] of Object.entries(resObj.lastHPS.Encounter)) {
-            resObj.lastHPS.Encounter[key] = value + relevantEncounters[i].lastHPS.Encounter[key]
-          }
-        for(let person of resObj.lastHPS.persons){
-            for (const [key, value] of Object.entries(resObj.lastHPS.persons[person])) {
-                resObj.lastHPS.persons[person][key] = value + relevantEncounters[i].lastHPS.persons[person][key]
-              }
-        }
+        //number fields for encounter
+        resObj.Encounter["DAMAGE-b"] += relevantEncounters[i].Encounter["DAMAGE-b"]
+        resObj.Encounter["DAMAGE-k"] += relevantEncounters[i].Encounter["DAMAGE-k"]
+        resObj.Encounter["DAMAGE-m"] += relevantEncounters[i].Encounter["DAMAGE-m"]
+        resObj.Encounter["DURATION"] += relevantEncounters[i].Encounter["DURATION"]
+        resObj.Encounter["damage"] += relevantEncounters[i].Encounter["damage"]
+        resObj.Encounter["damage-m"] += relevantEncounters[i].Encounter["damage-m"]
+        resObj.Encounter["healed"] += relevantEncounters[i].Encounter["healed"]
+        resObj.Encounter["swings"] += relevantEncounters[i].Encounter["swings"]
+        //text fields for encounter
+        if(resObj.Encounter["DURATION"] == 0) resObj.Encounter["DURATION"] = 1
+        resObj.Encounter["duration"] = (Math.floor(resObj.Encounter["DURATION"]/60).toString() + ":" + (resObj.Encounter["DURATION"]-(Math.floor(resObj.Encounter["DURATION"]/60)*60).toString()))
     }
     console.log(resObj)/*
     var table = document.createElement("TABLE");
