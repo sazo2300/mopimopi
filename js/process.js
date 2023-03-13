@@ -655,7 +655,7 @@ function historyAddRow() {
         } else {
             encounterCount = 1;
             td.innerText = encounterCount
-
+            console.log(encounterArray)
             //Handle overall
             let estimatedOverallHTML = wrap.querySelectorAll(`[id^="${encounterArray[1].lastDPS.Encounter.CurrentZoneName}"]`)
             for(let res of estimatedOverallHTML){
@@ -672,7 +672,7 @@ function historyAddRow() {
         wrap.appendChild(newHistory);
     else wrap.insertBefore(newHistory, oldHistory);
     newHistory.id = 'HISTORYoldBody';
-    console.log(wrap)
+    addOverallData()
     $('#HISTORYBody .tableWrap').on({
         mouseover: function() {
             if (init.Range.bar == 0)
@@ -706,4 +706,96 @@ function historyAddRow() {
     })
     firstCombat = false
     hiddenTable()
+}
+
+function addOverallData(){
+    let relevantEncounters = [];
+    let currentCounter = -1;
+    for(let i = 0; i < encounterArray.length; i++){
+        if(encounterArray[i].zone == lastDPS.zone){
+            relevantEncounters.push(encounterArray[i]);
+        }else{
+            break;
+        }
+    }
+    let resObj = relevantEncounters[0]
+    for(let i = 1; i < relevantEncounters.length; i++){
+        for (const [key, value] of Object.entries(resObj.lastDPS.Encounter)) {
+            resObj.lastDPS.Encounter[key] = value + relevantEncounters[i].lastDPS.Encounter[key]
+          }
+        for(let person of resObj.lastDPS.persons){
+            for (const [key, value] of Object.entries(resObj.lastDPS.persons[person])) {
+                resObj.lastDPS.persons[person][key] = value + relevantEncounters[i].lastDPS.persons[person][key]
+              }
+        }
+        for (const [key, value] of Object.entries(resObj.lastHPS.Encounter)) {
+            resObj.lastHPS.Encounter[key] = value + relevantEncounters[i].lastHPS.Encounter[key]
+          }
+        for(let person of resObj.lastHPS.persons){
+            for (const [key, value] of Object.entries(resObj.lastHPS.persons[person])) {
+                resObj.lastHPS.persons[person][key] = value + relevantEncounters[i].lastHPS.persons[person][key]
+              }
+        }
+    }
+    console.log(resObj)/*
+    var table = document.createElement("TABLE");
+    table.id = lastDPS.zone + "_OVERALL_" + lastDPS.combatKey;
+    table.className = "tableBody";
+    var tr = table.insertRow();
+    var td = tr.insertCell();
+    td.innerHTML = '<img src="./images/menu/eye.svg" style="width:1.5rem"/>';
+    td.className = "cell_5";
+    td.id = "viewIcon";
+    var td = tr.insertCell();
+    if (lastDPS.title != 'Encounter')
+        td.innerHTML = lastDPS.title + '<span class="ex"> / ' + lastDPS.zone + '</span>';
+    else
+        td.innerHTML = 'No Data' + '<span class="ex"> / ' + lastDPS.zone + '</span>';
+    td.className = "cell_1";
+    var td = tr.insertCell();
+    td.innerHTML = lastDPS.Encounter.duration;
+    td.className = "cell_5";
+    var td = tr.insertCell();
+    td.innerHTML = addComma(lastDPS.Encounter.ENCDPS)
+    td.className = "cell_6";
+    var td = tr.insertCell();
+    td.innerHTML = addComma(lastHPS.Encounter.ENCHPS)
+    td.className = "cell_6";
+    var td = tr.insertCell();
+    if (lastDPS.persons.YOU != null)
+        td.innerHTML = addComma(lastDPS.persons.YOU.ENCDPS)
+    else
+        td.innerHTML = 'No Data'
+    td.className = "cell_6 ac";
+    var td = tr.insertCell();
+    if (lastHPS.persons.YOU != null)
+        td.innerHTML = addComma(lastHPS.persons.YOU.ENCHPS)
+    else
+        td.innerHTML = 'No Data'
+    td.className = "cell_6 ac";
+    var td = tr.insertCell();
+    td.className = "cell_5";
+    td.id = "CNT";
+    if (encounterArray.length == 1)
+        td.innerText = 1;
+    else {
+        if (encounterArray[0].lastDPS.Encounter.CurrentZoneName == encounterArray[1].lastDPS.Encounter.CurrentZoneName) {
+            encounterCount++;
+            td.innerText = addComma(parseInt(encounterCount))
+        } else {
+            encounterCount = 1;
+            td.innerText = encounterCount
+            console.log(encounterArray)
+            //Handle overall
+            let estimatedOverallHTML = wrap.querySelectorAll(`[id^="${encounterArray[1].lastDPS.Encounter.CurrentZoneName}"]`)
+            for(let res of estimatedOverallHTML){
+                let oldID = res.getAttribute("id")
+                res.setAttribute("id", "Done_" + oldID)
+            }
+        }
+    }
+    var barBg = document.createElement("div");
+    barBg.className = "barBg";
+    newHistory.appendChild(table);
+    newHistory.appendChild(barBg);*/
 }
