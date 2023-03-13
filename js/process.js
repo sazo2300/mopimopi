@@ -721,18 +721,17 @@ function addOverallData(){
     let resObj = {}
     if(relevantEncounters.length > 0) resObj = relevantEncounters[0]
     for(let i = 1; i < relevantEncounters.length; i++){
-        //number fields for encounter
-        resObj.lastDPS.Encounter["DAMAGE-b"] += relevantEncounters[i].lastDPS.Encounter["DAMAGE-b"]
-        resObj.lastDPS.Encounter["DAMAGE-k"] += relevantEncounters[i].lastDPS.Encounter["DAMAGE-k"]
-        resObj.lastDPS.Encounter["DAMAGE-m"] += relevantEncounters[i].lastDPS.Encounter["DAMAGE-m"]
-        resObj.lastDPS.Encounter["DURATION"] += relevantEncounters[i].lastDPS.Encounter["DURATION"]
-        resObj.lastDPS.Encounter["damage"] += relevantEncounters[i].lastDPS.Encounter["damage"]
-        resObj.lastDPS.Encounter["damage-m"] += relevantEncounters[i].lastDPS.Encounter["damage-m"]
-        resObj.lastDPS.Encounter["healed"] += relevantEncounters[i].lastDPS.Encounter["healed"]
-        resObj.lastDPS.Encounter["swings"] += relevantEncounters[i].lastDPS.Encounter["swings"]
-        //text fields for encounter
-        if(resObj.lastDPS.Encounter["DURATION"] == 0) resObj.lastDPS.Encounter["DURATION"] = 1
-        resObj.lastDPS.Encounter["duration"] = (Math.floor(resObj.lastDPS.Encounter["DURATION"]/60).toString() + ":" + (resObj.lastDPS.Encounter["DURATION"]-(Math.floor(resObj.lastDPS.Encounter["DURATION"]/60)*60).toString()))
+        resObj.lastDPS.Encounter = populateOuterObjects(resObj.lastDPS.Encounter, relevantEncounters[i].lastDPS.Encounter)
+        resObj.lastHPS.Encounter = populateOuterObjects(resObj.lastHPS.Encounter, relevantEncounters[i].lastHPS.Encounter)
+
+        for (var d in resObj.lastDPS.persons) {
+            var a = resObj.lastDPS.persons[d];
+            var b = relevantEncounters[i].lastDPS.persons[d];
+            a = populateInnerObjects(a, b)
+            var c = resObj.lastHPS.persons[d];
+            var d = relevantEncounters[i].lastHPS.persons[d];
+            c = populateInnerObjects(c, d)
+        }
     }
     console.log(resObj)/*
     var table = document.createElement("TABLE");
@@ -795,4 +794,68 @@ function addOverallData(){
     barBg.className = "barBg";
     newHistory.appendChild(table);
     newHistory.appendChild(barBg);*/
+}
+
+function populateOuterObjects(a, b){
+            //number fields for encounter
+            a["DAMAGE-b"] += b["DAMAGE-b"]
+            a["DAMAGE-k"] += b["DAMAGE-k"]
+            a["DAMAGE-m"] += b["DAMAGE-m"]
+            a["DURATION"] += b["DURATION"]
+            a["damage"] += b["damage"]
+            a["damage-m"] += b["damage-m"]
+            a["healed"] += b["healed"]
+            a["swings"] += b["swings"]
+            //text fields for encounter
+            if(a["DURATION"] == 0) a["DURATION"] = 1
+            a["duration"] = (Math.floor(a["DURATION"]/60).toString() + ":" + (a["DURATION"]-(Math.floor(a["DURATION"]/60)*60).toString()))
+            return a;
+}
+
+function populateInnerObjects(a, b){
+                //number fields for encounter
+                a["DAMAGE-b"] += b["DAMAGE-b"]
+                a["DAMAGE-k"] += b["DAMAGE-k"]
+                a["DAMAGE-m"] += b["DAMAGE-m"]
+                a["DURATION"] += b["DURATION"]
+                a["damage"] += b["damage"]
+                a["damage-m"] += b["damage-m"]
+                a["healed"] += b["healed"]
+                a["swings"] += b["swings"]
+                a["mergedDamage"] += b["mergedDamage"]
+                a["mergedHealed"] += b["mergedHealed"]
+                a["mergedOverHeal"] += b["mergedOverHeal"]
+                a["mergedCrithits"] += b["mergedCrithits"]
+                a["mergedHits"] += b["mergedHits"]
+                a["mergedDirectHitCount"] += b["mergedDirectHitCount"]
+                a["mergedCritheals"] += b["mergedCritheals"]
+                a["mergedSwings"] += b["mergedSwings"]
+                a["overHeal"] += b["overHeal"]
+    
+                //text fields for encounter
+                if(a["DURATION"] == 0) a["DURATION"] = 1
+                a["EncounterDuration"] = (Math.floor(a["DURATION"]/60).toString() + ":" + (a["DURATION"]-(Math.floor(a["DURATION"]/60)*60).toString()))
+    
+                a.dps = pFloat(a.mergedDamage / a["DURATION"]);
+                a.encdps = pFloat(a.mergedDamage / resObj.lastDPS.Encounter["DURATION"]);
+                a.hps = pFloat(a.mergedHealed / a["DURATION"]);
+                a.enchps = pFloat(a.mergedHealed / resObj.lastDPS.Encounter["DURATION"]);
+                a["DAMAGE-k"] = Math.floor(a.mergedDamage / 1000);
+                a["DAMAGE-m"] = Math.floor(a.mergedDamage / 1000000);
+                a.DPS = Math.floor(a.dps);
+                a["DPS-k"] = Math.floor(a.dps / 1000);
+                a.ENCDPS = Math.floor(a.encdps);
+                a.ENCHPS = Math.floor(a.enchps);
+                a["ENCDPS-k"] = Math.floor(a.encdps / 1000);
+                a["ENCHPS-k"] = Math.floor(a.enchps / 1000);
+                a["damagePct"] = pFloat(a.mergedDamage / resObj.lastDPS.Encounter["damage"] * 100);
+                a["healedPct"] = pFloat(a.mergedHealed / resObj.lastDPS.Encounter["healed"] * 100);
+                a["overHealPct"] = pFloat(a.mergedOverHeal / a.mergedHealed * 100);
+                a["crithitPct"] = pFloat(a.mergedCrithits / a.mergedHits * 100);
+                a["DirectHitPct"] = pFloat(a.mergedDirectHitCount / a.mergedHits * 100);
+                a["CritDirectHitPct"] = pFloat(a.mergedCritDirectHitCount / a.mergedHits * 100);
+                a["crithealPct"] = pFloat(a.mergedCritheals / a.mergedHeals * 100);
+                a.tohit = pFloat(a.mergedHits / a.mergedSwings * 100)
+                a.mergedHealed = a.healed - a.overHeal
+                return a;
 }
