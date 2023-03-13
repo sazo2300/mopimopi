@@ -86,7 +86,8 @@ function initOverlay(val) {
     resizeWindow(view)
     hiddenTable()
     if (init.q.arrow)
-        $('#wrap').css({ 'background-image': 'url(./images/handle.svg)', "background-color": "rgba(0,0,0,0.5)" })
+        $('#wrap').css({ 'background-image': 'url(./images/handle.svg)' })
+    document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
     ui()
 }
 $('.scrollArea').scroll(function() {
