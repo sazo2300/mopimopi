@@ -830,6 +830,8 @@ function button(id, direction) {
                 localStorage.setItem('Mopi2_HAERU', JSON.stringify(init))
                 if(init.q.backgroundColor)
                     document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
+                else 
+                document.body.style.backgroundColor = "";
                 $('.previewArea, .tabArea, .scrollArea').html('') 
                 if (lastCombat != null) {
                     //오버레이가 계속 갱신되므로 해당부분 제거
