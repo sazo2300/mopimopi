@@ -792,6 +792,7 @@ function historyAddRow() {
                 newHistory2.className = 'tableWrap'
                 newHistory2.appendChild(res[0]);
                 newHistory2.appendChild(res[1]);
+                newHistory2.id = 'HISTORYoldBody';
             }
         } else {
             encounterCount = 1;
@@ -925,7 +926,7 @@ function addOverallData(){
     var td = tr.insertCell();
     td.className = "cell_5";
     td.id = "CNT";
-    td.innerText = addComma(parseInt(encounterCount + 1))
+    td.innerText = addComma(parseInt(encounterCount + 2))
     if (encounterArray.length == 1)
         td.innerText = 1;
     else {
