@@ -660,7 +660,7 @@ function historyAddRow() {
             let estimatedOverallHTML = wrap.querySelectorAll(`[id^="${encounterArray[1].lastDPS.Encounter.CurrentZoneName}"]`)
             for(let res of estimatedOverallHTML){
                 console.log("found", res)
-                wrap.getElementById(res.id).setAttribute('id', "Done_" + res.id);
+                res.setAttribute("id", res.getAttribute("id", "Done_" + res.id))
             }
         }
     }
