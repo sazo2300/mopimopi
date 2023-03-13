@@ -769,12 +769,24 @@ function historyAddRow() {
     var td = tr.insertCell();
     td.className = "cell_5";
     td.id = "CNT";
+
+    var newHistory2 = undefined
     if (encounterArray.length == 1)
         td.innerText = 1;
     else {
         if (encounterArray[0].lastDPS.Encounter.CurrentZoneName == encounterArray[1].lastDPS.Encounter.CurrentZoneName) {
             encounterCount++;
             td.innerText = addComma(parseInt(encounterCount))
+
+            if(encounterArray.length > 1){
+                let estimatedOverallHTML = wrap.querySelector(`[id^="${lastDPS.zone + "_OVERALL_"}"]`)
+                if(estimatedOverallHTML) estimatedOverallHTML.remove()
+                let res = addOverallData();
+                newHistory2 = document.createElement("div");
+                newHistory2.className = 'tableWrap'
+                newHistory2.appendChild(res[0]);
+                newHistory2.appendChild(res[1]);
+            }
         } else {
             encounterCount = 1;
             td.innerText = encounterCount
@@ -794,15 +806,8 @@ function historyAddRow() {
     if (oldHistory == null)
         wrap.appendChild(newHistory);
     else wrap.insertBefore(newHistory, oldHistory);
+    if(newHistory2) wrap.insertBefore(newHistory2, newHistory)
     newHistory.id = 'HISTORYoldBody';
-    if(encounterArray.length > 1){
-        let res = addOverallData();
-        var newHistory2 = document.createElement("div");
-        newHistory2.className = 'tableWrap'
-        newHistory2.appendChild(res[0]);
-        newHistory2.appendChild(res[1]);
-        wrap.insertBefore(newHistory2, newHistory)
-    }
     $('#HISTORYBody .tableWrap').on({
         mouseover: function() {
             if (init.Range.bar == 0)
