@@ -2807,19 +2807,6 @@ l = {
                     i: "history",
                     ul: 0
                 },
-                btn_RequestEnd: {
-                    tt: {
-                        KR: "전투 집계 종료 버튼 고정",
-                        JP: "エンカウント終了ボタン固定",
-                        EN: "Fixed of End-Encounter Button",
-                        FR: "Bouton de fin de combat fixe",
-                        DE: "Zeige den Stopp Button immer",
-                        CN: "固定战斗统计结束按钮",
-                    },
-                    e: "li_checkbox",
-                    i: "timer_off",
-                    ul: 0
-                },
                 act: {
                     tt: {
                         KR: "전투 데이터 표시 유형",
