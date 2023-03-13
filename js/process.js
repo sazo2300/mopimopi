@@ -813,6 +813,9 @@ function populateOuterObjects(a, b, init = false){
         for(let name of b.persons){
             let person = b.persons[name];
             let clone = (({ parent, ...person }) => person)(person)
+            if(!a.persons){
+                a.persons = {}
+            }
             a.persons[name] = JSON.parse(JSON.stringify(clone))
         }
     } else {
