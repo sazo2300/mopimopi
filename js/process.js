@@ -359,7 +359,7 @@ function onCombatDataUpdate(flag, last) {
                 var a = last.persons[d];
                 var userName = a.name.replace(/ /g, "").replace("(", "").replace(")", "").replace(/'/g, "_");
                 if (init.q.pets == 1 && a.Job == 'AVA' || a.Class == '') {} else
-                    inputGraph(userName, flag, a.parent.maxdamage, a)
+                    inputGraph(userName, flag, "0", a)
             }
         }
     }
