@@ -81,6 +81,7 @@ Mopi2 = {
         bar_position_DPS: 'left', 
         arrow: 1, 
         autoHide: 1, 
+        backgroundColor: 0, 
         tooltips: 1, 
         toast: 1, 
         Lang: "KR", 
