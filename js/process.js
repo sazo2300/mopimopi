@@ -780,8 +780,14 @@ function historyAddRow() {
 
             if(encounterArray.length > 1){
                 let estimatedOverallHTML = wrap.querySelector(`[id^="${lastDPS.zone + "_OVERALL_"}"]`)
-                if(estimatedOverallHTML) estimatedOverallHTML.parentElement.remove()
-                let res = addOverallData();
+                
+                if(estimatedOverallHTML){
+                    let index = encounterArray.findIndex(a => a.lastDPS.combatKey == estimatedOverallHTML.getAttribute("id"))
+                    encounterArray.splice(index, 1);
+                    estimatedOverallHTML.parentElement.remove()
+                }
+
+                let res = addOverallData(encounterCount);
                 newHistory2 = document.createElement("div");
                 newHistory2.className = 'tableWrap'
                 newHistory2.appendChild(res[0]);
@@ -882,7 +888,7 @@ function addOverallData(){
     })
     
     var table = document.createElement("TABLE");
-    table.id = resObj.lastDPS.zone + "_OVERALL_" + resObj.lastDPS.combatKey;
+    table.id = resObj.lastDPS.combatKey;
     table.className = "tableBody";
     var tr = table.insertRow();
     var td = tr.insertCell();
@@ -919,6 +925,7 @@ function addOverallData(){
     var td = tr.insertCell();
     td.className = "cell_5";
     td.id = "CNT";
+    td.innerText = addComma(parseInt(encounterCount + 1))
     if (encounterArray.length == 1)
         td.innerText = 1;
     else {
@@ -957,7 +964,7 @@ function populateOuterObjects(a, b, init = false){
         a.Encounter.hps = pFloat(a.Encounter["healed"] / a.Encounter["DURATION"]);
         a.Encounter.enchps = pFloat(a.Encounter["healed"] / a.Encounter["DURATION"]);
         a.zone = b.Encounter.CurrentZoneName
-        a.combatKey = a.zone + "OVERALL" + Math.floor((Math.random() * 100000) + 1000)
+        a.combatKey = a.zone + "_OVERALL_" + Math.floor((Math.random() * 100000) + 1000)
 
         for (const [key, value] of Object.entries(b.persons)) {
             let person = b.persons[key];
