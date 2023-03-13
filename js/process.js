@@ -721,11 +721,11 @@ function addOverallData(){
     let resObj = { lastDPS: {Encounter: {}}, lastHPS: {Encounter: {}}}
     let dontTouch = {}
     if(relevantEncounters.length > 0) dontTouch = relevantEncounters[0]
-    resObj.lastDPS.Encounter = populateOuterObjects(resObj.lastDPS, dontTouch.lastDPS, true)
-    resObj.lastHPS.Encounter = populateOuterObjects(resObj.lastHPS, dontTouch.lastHPS, true)
+    resObj.lastDPS = populateOuterObjects(resObj.lastDPS, dontTouch.lastDPS, true)
+    resObj.lastHPS = populateOuterObjects(resObj.lastHPS, dontTouch.lastHPS, true)
     for(let i = 1; i < relevantEncounters.length; i++){
-        resObj.lastDPS.Encounter = populateOuterObjects(resObj.lastDPS, relevantEncounters[i].lastDPS)
-        resObj.lastHPS.Encounter = populateOuterObjects(resObj.lastHPS, relevantEncounters[i].lastHPS)
+        resObj.lastDPS = populateOuterObjects(resObj.lastDPS, relevantEncounters[i].lastDPS)
+        resObj.lastHPS = populateOuterObjects(resObj.lastHPS, relevantEncounters[i].lastHPS)
 
         for (var d in resObj.lastDPS.persons) {
             var a = resObj.lastDPS.persons[d];
