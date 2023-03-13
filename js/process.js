@@ -608,7 +608,7 @@ function historyAddRow() {
     var oldHistory = document.getElementById('HISTORYoldBody');
     $('#HISTORYBody').find('td#viewIcon').html('');
     var table = document.createElement("TABLE");
-    table.id = lastDPS.combatKey;
+    table.id = lastDPS.zone + "_" + lastDPS.combatKey;
     table.className = "tableBody";
     var tr = table.insertRow();
     var td = tr.insertCell();
@@ -664,7 +664,7 @@ function historyAddRow() {
         wrap.appendChild(newHistory);
     else wrap.insertBefore(newHistory, oldHistory);
     newHistory.id = 'HISTORYoldBody';
-    console.log(wrap)
+    console.log(wrap.querySelector(`[id^="${lastDPS.zone}"]`))
     $('#HISTORYBody .tableWrap').on({
         mouseover: function() {
             if (init.Range.bar == 0)
