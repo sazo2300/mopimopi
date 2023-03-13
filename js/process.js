@@ -712,7 +712,7 @@ function addOverallData(){
     let relevantEncounters = [];
     let currentCounter = -1;
     for(let i = 0; i < encounterArray.length; i++){
-        if(encounterArray[i].zone == lastDPS.zone){
+        if(encounterArray[i].lastDPS.zone == lastDPS.zone){
             console.log("found one")
             relevantEncounters.push(encounterArray[i]);
         }else{
