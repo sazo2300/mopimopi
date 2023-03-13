@@ -850,7 +850,7 @@ function historyAddRow() {
     hiddenTable()
 }
 
-function addOverallData(){
+function addOverallData(counter){
     let relevantEncounters = [];
     let currentCounter = -1;
     for(let i = 0; i < encounterArray.length; i++){
@@ -926,7 +926,7 @@ function addOverallData(){
     var td = tr.insertCell();
     td.className = "cell_5";
     td.id = "CNT";
-    td.innerText = addComma(parseInt(encounterCount + 2))
+    td.innerText = addComma(parseInt(counter + 2))
     if (encounterArray.length == 1)
         td.innerText = 1;
     else {
