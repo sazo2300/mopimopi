@@ -713,16 +713,13 @@ function addOverallData(){
     let currentCounter = -1;
     for(let i = 0; i < encounterArray.length; i++){
         if(encounterArray[i].lastDPS.zone == lastDPS.zone){
-            console.log("found one")
             relevantEncounters.push(encounterArray[i]);
         }else{
             break;
         }
     }
-    console.log("relevant encounters: ", relevantEncounters)
     let resObj = {}
     if(relevantEncounters.length > 0) resObj = relevantEncounters[0]
-    console.log("init obj: ", JSON.parse(JSON.stringify(resObj)))
     for(let i = 1; i < relevantEncounters.length; i++){
         //number fields for encounter
         resObj.Encounter["DAMAGE-b"] += relevantEncounters[i].Encounter["DAMAGE-b"]
