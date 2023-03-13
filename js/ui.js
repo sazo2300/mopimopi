@@ -90,7 +90,8 @@ function initOverlay(val) {
     hiddenTable()
     if (init.q.arrow)
         $('#wrap').css({ 'background-image': 'url(./images/handle.svg)' })
-    document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
+    if(init.q.backgroundColor)
+        document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
     ui()
 }
 $('.scrollArea').scroll(function() {
