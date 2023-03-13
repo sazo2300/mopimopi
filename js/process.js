@@ -780,7 +780,7 @@ function historyAddRow() {
 
             if(encounterArray.length > 1){
                 let estimatedOverallHTML = wrap.querySelector(`[id^="${lastDPS.zone + "_OVERALL_"}"]`)
-                
+
                 if(estimatedOverallHTML){
                     let index = encounterArray.findIndex(a => a.lastDPS.combatKey == estimatedOverallHTML.getAttribute("id"))
                     encounterArray.splice(index, 1);
@@ -956,6 +956,7 @@ function populateOuterObjects(a, b, init = false){
         a.Encounter["DAMAGE-m"] = b.Encounter["DAMAGE-m"]
         a.Encounter["DURATION"] = b.Encounter["DURATION"]
         a.Encounter["damage"] = b.Encounter["damage"]
+        a.Encounter["CurrentZoneName"] = b.Encounter["CurrentZoneName"]
         a.Encounter["damage-m"] = b.Encounter["damage-m"]
         a.Encounter["healed"] = b.Encounter["healed"]
         a.Encounter["swings"] = b.Encounter["swings"]
