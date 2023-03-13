@@ -780,7 +780,7 @@ function historyAddRow() {
 
             if(encounterArray.length > 1){
                 let estimatedOverallHTML = wrap.querySelector(`[id^="${lastDPS.zone + "_OVERALL_"}"]`)
-                if(estimatedOverallHTML) estimatedOverallHTML.remove()
+                if(estimatedOverallHTML) estimatedOverallHTML.parentElement.remove()
                 let res = addOverallData();
                 newHistory2 = document.createElement("div");
                 newHistory2.className = 'tableWrap'
@@ -848,7 +848,9 @@ function addOverallData(){
     let currentCounter = -1;
     for(let i = 0; i < encounterArray.length; i++){
         if(encounterArray[i].lastDPS.zone == lastDPS.zone){
-            relevantEncounters.push(encounterArray[i]);
+            if(!encounterArray[i].lastDPS.overallData){
+                relevantEncounters.push(encounterArray[i]);
+            }
         }else{
             break;
         }
