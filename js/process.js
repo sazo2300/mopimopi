@@ -722,17 +722,17 @@ function addOverallData(){
     if(relevantEncounters.length > 0) resObj = relevantEncounters[0]
     for(let i = 1; i < relevantEncounters.length; i++){
         //number fields for encounter
-        resObj.Encounter["DAMAGE-b"] += relevantEncounters[i].Encounter["DAMAGE-b"]
-        resObj.Encounter["DAMAGE-k"] += relevantEncounters[i].Encounter["DAMAGE-k"]
-        resObj.Encounter["DAMAGE-m"] += relevantEncounters[i].Encounter["DAMAGE-m"]
-        resObj.Encounter["DURATION"] += relevantEncounters[i].Encounter["DURATION"]
-        resObj.Encounter["damage"] += relevantEncounters[i].Encounter["damage"]
-        resObj.Encounter["damage-m"] += relevantEncounters[i].Encounter["damage-m"]
-        resObj.Encounter["healed"] += relevantEncounters[i].Encounter["healed"]
-        resObj.Encounter["swings"] += relevantEncounters[i].Encounter["swings"]
+        resObj.lastDPS.Encounter["DAMAGE-b"] += relevantEncounters[i].lastDPS.Encounter["DAMAGE-b"]
+        resObj.lastDPS.Encounter["DAMAGE-k"] += relevantEncounters[i].lastDPS.Encounter["DAMAGE-k"]
+        resObj.lastDPS.Encounter["DAMAGE-m"] += relevantEncounters[i].lastDPS.Encounter["DAMAGE-m"]
+        resObj.lastDPS.Encounter["DURATION"] += relevantEncounters[i].lastDPS.Encounter["DURATION"]
+        resObj.lastDPS.Encounter["damage"] += relevantEncounters[i].lastDPS.Encounter["damage"]
+        resObj.lastDPS.Encounter["damage-m"] += relevantEncounters[i].lastDPS.Encounter["damage-m"]
+        resObj.lastDPS.Encounter["healed"] += relevantEncounters[i].lastDPS.Encounter["healed"]
+        resObj.lastDPS.Encounter["swings"] += relevantEncounters[i].lastDPS.Encounter["swings"]
         //text fields for encounter
-        if(resObj.Encounter["DURATION"] == 0) resObj.Encounter["DURATION"] = 1
-        resObj.Encounter["duration"] = (Math.floor(resObj.Encounter["DURATION"]/60).toString() + ":" + (resObj.Encounter["DURATION"]-(Math.floor(resObj.Encounter["DURATION"]/60)*60).toString()))
+        if(resObj.lastDPS.Encounter["DURATION"] == 0) resObj.lastDPS.Encounter["DURATION"] = 1
+        resObj.lastDPS.Encounter["duration"] = (Math.floor(resObj.lastDPS.Encounter["DURATION"]/60).toString() + ":" + (resObj.lastDPS.Encounter["DURATION"]-(Math.floor(resObj.lastDPS.Encounter["DURATION"]/60)*60).toString()))
     }
     console.log(resObj)/*
     var table = document.createElement("TABLE");
