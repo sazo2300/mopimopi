@@ -809,6 +809,12 @@ function populateOuterObjects(a, b, init = false){
         a["damage-m"] = b.Encounter["damage-m"]
         a["healed"] = b.Encounter["healed"]
         a["swings"] = b.Encounter["swings"]
+
+        for(let name of b.persons){
+            let person = b.persons[name];
+            let clone = (({ parent, ...person }) => person)(person)
+            a.persons[name] = JSON.parse(JSON.stringify(clone))
+        }
     } else {
             //number fields for encounter
             a["DAMAGE-b"] += b.Encounter["DAMAGE-b"]
@@ -823,7 +829,6 @@ function populateOuterObjects(a, b, init = false){
             if(a["DURATION"] == 0) a["DURATION"] = 1
             a["duration"] = (Math.floor(a["DURATION"]/60).toString() + ":" + (a["DURATION"]-(Math.floor(a["DURATION"]/60)*60).toString()))
     }
-            a.persons = JSON.parse(JSON.stringify(b.persons))
             return a;
 }
 
