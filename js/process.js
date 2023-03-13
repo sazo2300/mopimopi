@@ -727,10 +727,10 @@ function addOverallData(){
         for (var d in resObj.lastDPS.persons) {
             var a = resObj.lastDPS.persons[d];
             var b = relevantEncounters[i].lastDPS.persons[d];
-            a = populateInnerObjects(a, b)
+            a = populateInnerObjects(a, b, resObj)
             var c = resObj.lastHPS.persons[d];
             var d = relevantEncounters[i].lastHPS.persons[d];
-            c = populateInnerObjects(c, d)
+            c = populateInnerObjects(c, d, resObj)
         }
     }
     console.log(resObj)/*
@@ -812,7 +812,7 @@ function populateOuterObjects(a, b){
             return a;
 }
 
-function populateInnerObjects(a, b){
+function populateInnerObjects(a, b, resObj){
                 //number fields for encounter
                 a["DAMAGE-b"] += b["DAMAGE-b"]
                 a["DAMAGE-k"] += b["DAMAGE-k"]
