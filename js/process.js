@@ -721,9 +721,7 @@ function addOverallData(){
     }
     console.log("relevant encounters: ", relevantEncounters)
     let resObj = {}
-    if(relevantEncounters.length > 0)[
-        resObj = relevantEncounters[0]
-    ]
+    if(relevantEncounters.length > 0) resObj = relevantEncounters[0]
     console.log("init obj: ", JSON.parse(JSON.stringify(resObj)))
     for(let i = 1; i < relevantEncounters.length; i++){
         //number fields for encounter
