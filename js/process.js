@@ -926,7 +926,7 @@ function addOverallData(counter){
     var td = tr.insertCell();
     td.className = "cell_5";
     td.id = "CNT";
-    td.innerText = addComma(parseInt(counter + 2))
+    td.innerText = addComma(parseInt(counter + 3))
     if (encounterArray.length == 1)
         td.innerText = 1;
     else {
