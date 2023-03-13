@@ -926,22 +926,12 @@ function addOverallData(counter){
     var td = tr.insertCell();
     td.className = "cell_5";
     td.id = "CNT";
-    td.innerText = addComma(parseInt(counter + 3))
+    td.innerText = addComma(parseInt(counter + 1))
     if (encounterArray.length == 1)
         td.innerText = 1;
     else {
         if (encounterArray[0].lastDPS.Encounter.CurrentZoneName == encounterArray[1].lastDPS.Encounter.CurrentZoneName) {
-            td.innerText = addComma(parseInt(encounterCount))
-        } else {
-            encounterCount = 1;
-            td.innerText = encounterCount
-            console.log(encounterArray)
-            //Handle overall
-            let estimatedOverallHTML = wrap.querySelectorAll(`[id^="${encounterArray[1].lastDPS.Encounter.CurrentZoneName}"]`)
-            for(let res of estimatedOverallHTML){
-                let oldID = res.getAttribute("id")
-                res.setAttribute("id", "Done_" + oldID)
-            }
+            td.innerText = addComma(parseInt(counter + 1))
         }
     }
     var barBg = document.createElement("div");
