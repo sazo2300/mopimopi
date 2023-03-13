@@ -727,7 +727,7 @@ function addOverallData(){
             break;
         }
     }
-    let resObj = { lastDPS: {Encounter: {}, overallData: true}, lastHPS: {Encounter: {}, overallData: true}}
+    let resObj = { lastDPS: {Encounter: {}, overallData: true, title: "Overall Data"}, lastHPS: {Encounter: {}, overallData: true, title: "Overall Data"}}
     let dontTouch = {}
     if(relevantEncounters.length > 0) dontTouch = relevantEncounters[0]
     resObj.lastDPS = populateOuterObjects(resObj.lastDPS, dontTouch.lastDPS, true)
