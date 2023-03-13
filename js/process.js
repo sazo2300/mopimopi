@@ -719,7 +719,7 @@ function addOverallData(){
         }
     }
     let resObj = {}
-    if(relevantEncounters.length > 0) resObj = relevantEncounters[0]
+    if(relevantEncounters.length > 0) resObj = {...relevantEncounters[0]}
     for(let i = 1; i < relevantEncounters.length; i++){
         resObj.lastDPS.Encounter = populateOuterObjects(resObj.lastDPS.Encounter, relevantEncounters[i].lastDPS.Encounter)
         resObj.lastHPS.Encounter = populateOuterObjects(resObj.lastHPS.Encounter, relevantEncounters[i].lastHPS.Encounter)
