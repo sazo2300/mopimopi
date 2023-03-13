@@ -672,7 +672,14 @@ function historyAddRow() {
         wrap.appendChild(newHistory);
     else wrap.insertBefore(newHistory, oldHistory);
     newHistory.id = 'HISTORYoldBody';
-    addOverallData()
+    if(encounterArray.length > 1){
+        let res = addOverallData();
+        var newHistory2 = document.createElement("div");
+        newHistory2.className = 'tableWrap'
+        newHistory2.appendChild(res[0]);
+        newHistory2.appendChild(res[1]);
+        wrap.insertBefore(newHistory2, newHistory)
+    }
     $('#HISTORYBody .tableWrap').on({
         mouseover: function() {
             if (init.Range.bar == 0)
@@ -692,7 +699,7 @@ function historyAddRow() {
             $('#HISTORYBody').find('td#viewIcon').html('');
             var listName = $(this).find('table').attr("id")
             for (var i in encounterArray) {
-                if (listName == encounterArray[i].combatKey) {
+                if (listName.contains(encounterArray[i].combatKey)) {
                     lastDPS = encounterArray[i].lastDPS
                     lastHPS = encounterArray[i].lastHPS
                     $(this).find('#viewIcon').html('<img src="./images/menu/eye.svg" style="width:' + parseFloat(init.Range.sizeBodyIcon / 10) + 'rem' + '"/>')
@@ -736,9 +743,10 @@ function addOverallData(){
             c = populateInnerObjects(c, d, resObj)
         }
     }
-    console.log(resObj)/*
+    console.log(resObj)
+    
     var table = document.createElement("TABLE");
-    table.id = lastDPS.zone + "_OVERALL_" + lastDPS.combatKey;
+    table.id = resObj.lastDPS.zone + "_OVERALL_" + resObj.lastDPS.combatKey;
     table.className = "tableBody";
     var tr = table.insertRow();
     var td = tr.insertCell();
@@ -746,29 +754,29 @@ function addOverallData(){
     td.className = "cell_5";
     td.id = "viewIcon";
     var td = tr.insertCell();
-    if (lastDPS.title != 'Encounter')
-        td.innerHTML = lastDPS.title + '<span class="ex"> / ' + lastDPS.zone + '</span>';
+    if (resObj.lastDPS.title != 'Encounter')
+        td.innerHTML = resObj.lastDPS.title + '<span class="ex"> / ' + resObj.lastDPS.zone + '</span>';
     else
-        td.innerHTML = 'No Data' + '<span class="ex"> / ' + lastDPS.zone + '</span>';
+        td.innerHTML = 'No Data' + '<span class="ex"> / ' + resObj.lastDPS.zone + '</span>';
     td.className = "cell_1";
     var td = tr.insertCell();
-    td.innerHTML = lastDPS.Encounter.duration;
+    td.innerHTML = resObj.lastDPS.Encounter.duration;
     td.className = "cell_5";
     var td = tr.insertCell();
-    td.innerHTML = addComma(lastDPS.Encounter.ENCDPS)
+    td.innerHTML = addComma(resObj.lastDPS.Encounter.ENCDPS)
     td.className = "cell_6";
     var td = tr.insertCell();
-    td.innerHTML = addComma(lastHPS.Encounter.ENCHPS)
+    td.innerHTML = addComma(resObj.lastHPS.Encounter.ENCHPS)
     td.className = "cell_6";
     var td = tr.insertCell();
-    if (lastDPS.persons.YOU != null)
-        td.innerHTML = addComma(lastDPS.persons.YOU.ENCDPS)
+    if (resObj.lastDPS.persons.YOU != null)
+        td.innerHTML = addComma(resObj.lastDPS.persons.YOU.ENCDPS)
     else
         td.innerHTML = 'No Data'
     td.className = "cell_6 ac";
     var td = tr.insertCell();
-    if (lastHPS.persons.YOU != null)
-        td.innerHTML = addComma(lastHPS.persons.YOU.ENCHPS)
+    if (resObj.lastHPS.persons.YOU != null)
+        td.innerHTML = addComma(resObj.lastHPS.persons.YOU.ENCHPS)
     else
         td.innerHTML = 'No Data'
     td.className = "cell_6 ac";
@@ -795,8 +803,7 @@ function addOverallData(){
     }
     var barBg = document.createElement("div");
     barBg.className = "barBg";
-    newHistory.appendChild(table);
-    newHistory.appendChild(barBg);*/
+    return [table, barBg];
 }
 
 function populateOuterObjects(a, b, init = false){
