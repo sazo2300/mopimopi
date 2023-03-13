@@ -744,6 +744,12 @@ function addOverallData(){
         }
     }
     console.log(resObj)
+
+    encounterArray.unshift({
+        lastDPS: resObj.lastDPS,
+        lastHPS: resObj.lastHPS,
+        combatKey: resObj.lastDPS.combatKey
+    })
     
     var table = document.createElement("TABLE");
     table.id = resObj.lastDPS.zone + "_OVERALL_" + resObj.lastDPS.combatKey;
@@ -816,6 +822,12 @@ function populateOuterObjects(a, b, init = false){
         a.Encounter["damage-m"] = b.Encounter["damage-m"]
         a.Encounter["healed"] = b.Encounter["healed"]
         a.Encounter["swings"] = b.Encounter["swings"]
+        a.Encounter.dps = pFloat(a.Encounter["damage"] / a.Encounter["DURATION"]);
+        a.Encounter.encdps = pFloat(a.Encounter["damage"] / a.Encounter["DURATION"]);
+        a.Encounter.hps = pFloat(a.Encounter["healed"] / a.Encounter["DURATION"]);
+        a.Encounter.enchps = pFloat(a.Encounter["healed"] / a.Encounter["DURATION"]);
+        a.zone = b.Encounter.CurrentZoneName
+        a.combatKey = a.zone + "OVERALL" + Math.floor((Math.random() * 100000) + 1000)
 
         for (const [key, value] of Object.entries(b.persons)) {
             let person = b.persons[key];
@@ -838,6 +850,11 @@ function populateOuterObjects(a, b, init = false){
             //text fields for encounter
             if(a.Encounter["DURATION"] == 0) a.Encounter["DURATION"] = 1
             a.Encounter["duration"] = (Math.floor(a.Encounter["DURATION"]/60).toString() + ":" + (a.Encounter["DURATION"]-(Math.floor(a.Encounter["DURATION"]/60)*60).toString()))
+
+            a.Encounter.dps = pFloat(a.Encounter["damage"] / a.Encounter["DURATION"]);
+            a.Encounter.encdps = pFloat(a.Encounter["damage"] / a.Encounter["DURATION"]);
+            a.Encounter.hps = pFloat(a.Encounter["healed"] / a.Encounter["DURATION"]);
+            a.Encounter.enchps = pFloat(a.Encounter["healed"] / a.Encounter["DURATION"]);
     }
             return a;
 }
