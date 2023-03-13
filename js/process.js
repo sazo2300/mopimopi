@@ -4,6 +4,7 @@ var lastDPS = null,
     _ = '' 
 var barSize = new Array(),
     encounterArray = new Array(),
+    overallObject,
     encounterCount = 1;
 
 var onStopFlag = false;
@@ -656,8 +657,9 @@ function historyAddRow() {
             td.innerText = encounterCount
 
             //Handle overall
-            let estimatedOverallHTML = wrap.querySelectorAll(`[id^="${lastDPS.zone}"]`)
+            let estimatedOverallHTML = wrap.querySelectorAll(`[id^="${encounterArray[1].lastDPS.Encounter.CurrentZoneName}"]`)
             for(let res of estimatedOverallHTML){
+                console.log("found", res)
                 wrap.getElementById(res.id).setAttribute('id', "Done_" + res.id);
             }
         }
