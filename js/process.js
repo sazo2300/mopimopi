@@ -244,62 +244,123 @@ function createRaidTableBody(flag, a, userName) {
     return '<table id="' + userName + '" class="rCell"><tr><td rowspan="2" class="rIdx" style="background:' + graphColor(a.Class, a.role, userName) + '"></td><td class="rIcon">' + addData('Class', a.Class, a) + '</td><td class="rName">' + addData('name', a.name, a) + '</td></tr><tr><td colspan="2" class="rData">' + addData('enc' + flag.toLowerCase(), a['enc' + flag.toLowerCase()], a) + '</td></tr></table>'
 }
 function onCombatDataUpdate(flag, last) {
-    if (last.Combatant["YOU"] != undefined || last.Combatant["YOU"] != null) {
-        var Height = 0;
-        var tableHeader = document.getElementById(flag + "Header" + _);
-        var oldHeader = document.getElementById(flag + "oldHeader" + _);
-        var newHeader = document.createElement("div");
-        createTableHeader(flag, newHeader);
-        tableHeader.replaceChild(newHeader, oldHeader);
-        newHeader.id = flag + 'oldHeader' + _;        
-        var tableBody = document.getElementById(flag + "Body" + _);
-        var oldBody = document.getElementById(flag + "oldBody" + _);
-        var newBody = document.createElement("div");
-
-        var totalOverheal = 0;
-        for (var d in last.persons) {
-            var a = last.persons[d];
-            totalOverheal+=a.overHeal
-        }
-
-        for (var d in last.persons) {
-            var a = last.persons[d];
-            var userName = a.name.replace(/ /g, "").replace("(", "").replace(")", "").replace(/'/g, "_");
-            if (init.q.pets == 1 && a.Job == 'AVA' || a.Class == '') {} else {
-                var bodyHeight = parseInt(init.Range.sizeBody) + parseInt(init.Range.sizeLine)
-                if (flag == "HPS") {
-                    if (init.q.HPS_T == 1 && a.role == 'Tanker' || init.q.HPS_H == 1 && a.role == 'Healer' || init.q.HPS_D == 1 && a.role == 'DPS' || init.q.HPS_C == 1 && a.Job == 'CBO' || init.q.HPS_M == 1 && a.role == 'Crafter' || init.q.HPS_M == 1 && a.role == 'Gathering') {
-                        a["healed%"] = pFloat(a.mergedHealed / (a.parent.Encounter.healed - totalOverheal) * 100);
-                        a.healedPct = pFloat(a.mergedHealed / (a.parent.Encounter.healed - totalOverheal) * 100);
-                        a.mergedHealed = a.healed - a.overHeal
-                        a.enchps = parseFloat(((a.healed - a.overHeal) / a.parent.DURATION).nanFix().toFixed(underDot))
-                        //a.hps = parseFloat(((a.healed - a.overHeal) / a.parent.DURATION).nanFix().toFixed(underDot))
-                        createTableBody(userName, flag, newBody, a);
-                        if (Height < parseFloat(bodyHeight * init.Range.sizeHPSTable)) {
-                            Height += bodyHeight
-                            $('#HPSBody' + _).height(Height / 10 + 'rem')
+    if(!last.overallData){
+        if (last.Combatant["YOU"] != undefined || last.Combatant["YOU"] != null) {
+            var Height = 0;
+            var tableHeader = document.getElementById(flag + "Header" + _);
+            var oldHeader = document.getElementById(flag + "oldHeader" + _);
+            var newHeader = document.createElement("div");
+            createTableHeader(flag, newHeader);
+            tableHeader.replaceChild(newHeader, oldHeader);
+            newHeader.id = flag + 'oldHeader' + _;        
+            var tableBody = document.getElementById(flag + "Body" + _);
+            var oldBody = document.getElementById(flag + "oldBody" + _);
+            var newBody = document.createElement("div");
+    
+            var totalOverheal = 0;
+            for (var d in last.persons) {
+                var a = last.persons[d];
+                totalOverheal+=a.overHeal
+            }
+    
+            for (var d in last.persons) {
+                var a = last.persons[d];
+                var userName = a.name.replace(/ /g, "").replace("(", "").replace(")", "").replace(/'/g, "_");
+                if (init.q.pets == 1 && a.Job == 'AVA' || a.Class == '') {} else {
+                    var bodyHeight = parseInt(init.Range.sizeBody) + parseInt(init.Range.sizeLine)
+                    if (flag == "HPS") {
+                        if (init.q.HPS_T == 1 && a.role == 'Tanker' || init.q.HPS_H == 1 && a.role == 'Healer' || init.q.HPS_D == 1 && a.role == 'DPS' || init.q.HPS_C == 1 && a.Job == 'CBO' || init.q.HPS_M == 1 && a.role == 'Crafter' || init.q.HPS_M == 1 && a.role == 'Gathering') {
+                            a["healed%"] = pFloat(a.mergedHealed / (a.parent.Encounter.healed - totalOverheal) * 100);
+                            a.healedPct = pFloat(a.mergedHealed / (a.parent.Encounter.healed - totalOverheal) * 100);
+                            a.mergedHealed = a.healed - a.overHeal
+                            a.enchps = parseFloat(((a.healed - a.overHeal) / a.parent.DURATION).nanFix().toFixed(underDot))
+                            //a.hps = parseFloat(((a.healed - a.overHeal) / a.parent.DURATION).nanFix().toFixed(underDot))
+                            createTableBody(userName, flag, newBody, a);
+                            if (Height < parseFloat(bodyHeight * init.Range.sizeHPSTable)) {
+                                Height += bodyHeight
+                                $('#HPSBody' + _).height(Height / 10 + 'rem')
+                            }
                         }
-                    }
-                } else {
-                    if (init.q.DPS_T == 1 && a.role == 'Tanker' || init.q.DPS_H == 1 && a.role == 'Healer' || init.q.DPS_D == 1 && a.role == 'DPS' || init.q.DPS_C == 1 && a.Job == 'CBO' || init.q.DPS_M == 1 && a.role == 'Crafter' || init.q.DPS_M == 1 && a.role == 'Gathering') {
-                        createTableBody(userName, flag, newBody, a);
-                        if (Height < parseFloat(bodyHeight * init.Range.sizeDPSTable)) {
-                            Height += bodyHeight
-                            $('#DPSBody' + _).height(Height / 10 + 'rem')
+                    } else {
+                        if (init.q.DPS_T == 1 && a.role == 'Tanker' || init.q.DPS_H == 1 && a.role == 'Healer' || init.q.DPS_D == 1 && a.role == 'DPS' || init.q.DPS_C == 1 && a.Job == 'CBO' || init.q.DPS_M == 1 && a.role == 'Crafter' || init.q.DPS_M == 1 && a.role == 'Gathering') {
+                            createTableBody(userName, flag, newBody, a);
+                            if (Height < parseFloat(bodyHeight * init.Range.sizeDPSTable)) {
+                                Height += bodyHeight
+                                $('#DPSBody' + _).height(Height / 10 + 'rem')
+                            }
                         }
                     }
                 }
             }
+            tableBody.replaceChild(newBody, oldBody);
+            newBody.id = flag + 'oldBody' + _;        
+            if (Height == 0)
+                $('#' + flag + 'Header' + _).html('<div id="' + flag + 'oldHeader' + _ + '"></div>')        
+            for (var d in last.persons) {
+                var a = last.persons[d];
+                var userName = a.name.replace(/ /g, "").replace("(", "").replace(")", "").replace(/'/g, "_");
+                if (init.q.pets == 1 && a.Job == 'AVA' || a.Class == '') {} else
+                    inputGraph(userName, flag, a.parent.maxdamage, a)
+            }
         }
-        tableBody.replaceChild(newBody, oldBody);
-        newBody.id = flag + 'oldBody' + _;        
-        if (Height == 0)
-            $('#' + flag + 'Header' + _).html('<div id="' + flag + 'oldHeader' + _ + '"></div>')        
-        for (var d in last.persons) {
-            var a = last.persons[d];
-            var userName = a.name.replace(/ /g, "").replace("(", "").replace(")", "").replace(/'/g, "_");
-            if (init.q.pets == 1 && a.Job == 'AVA' || a.Class == '') {} else
-                inputGraph(userName, flag, a.parent.maxdamage, a)
+    } else {
+        if (last.persons["YOU"] != undefined || last.persons["YOU"] != null) {
+            var Height = 0;
+            var tableHeader = document.getElementById(flag + "Header" + _);
+            var oldHeader = document.getElementById(flag + "oldHeader" + _);
+            var newHeader = document.createElement("div");
+            createTableHeader(flag, newHeader);
+            tableHeader.replaceChild(newHeader, oldHeader);
+            newHeader.id = flag + 'oldHeader' + _;        
+            var tableBody = document.getElementById(flag + "Body" + _);
+            var oldBody = document.getElementById(flag + "oldBody" + _);
+            var newBody = document.createElement("div");
+    
+            var totalOverheal = 0;
+            for (var d in last.persons) {
+                var a = last.persons[d];
+                totalOverheal+=a.overHeal
+            }
+    
+            for (var d in last.persons) {
+                var a = last.persons[d];
+                var userName = a.name.replace(/ /g, "").replace("(", "").replace(")", "").replace(/'/g, "_");
+                if (init.q.pets == 1 && a.Job == 'AVA' || a.Class == '') {} else {
+                    var bodyHeight = parseInt(init.Range.sizeBody) + parseInt(init.Range.sizeLine)
+                    if (flag == "HPS") {
+                        if (init.q.HPS_T == 1 && a.role == 'Tanker' || init.q.HPS_H == 1 && a.role == 'Healer' || init.q.HPS_D == 1 && a.role == 'DPS' || init.q.HPS_C == 1 && a.Job == 'CBO' || init.q.HPS_M == 1 && a.role == 'Crafter' || init.q.HPS_M == 1 && a.role == 'Gathering') {
+                            a["healed%"] = pFloat(a.mergedHealed / (a.parent.Encounter.healed - totalOverheal) * 100);
+                            a.healedPct = pFloat(a.mergedHealed / (a.parent.Encounter.healed - totalOverheal) * 100);
+                            a.mergedHealed = a.healed - a.overHeal
+                            a.enchps = parseFloat(((a.healed - a.overHeal) / a.parent.DURATION).nanFix().toFixed(underDot))
+                            //a.hps = parseFloat(((a.healed - a.overHeal) / a.parent.DURATION).nanFix().toFixed(underDot))
+                            createTableBody(userName, flag, newBody, a);
+                            if (Height < parseFloat(bodyHeight * init.Range.sizeHPSTable)) {
+                                Height += bodyHeight
+                                $('#HPSBody' + _).height(Height / 10 + 'rem')
+                            }
+                        }
+                    } else {
+                        if (init.q.DPS_T == 1 && a.role == 'Tanker' || init.q.DPS_H == 1 && a.role == 'Healer' || init.q.DPS_D == 1 && a.role == 'DPS' || init.q.DPS_C == 1 && a.Job == 'CBO' || init.q.DPS_M == 1 && a.role == 'Crafter' || init.q.DPS_M == 1 && a.role == 'Gathering') {
+                            createTableBody(userName, flag, newBody, a);
+                            if (Height < parseFloat(bodyHeight * init.Range.sizeDPSTable)) {
+                                Height += bodyHeight
+                                $('#DPSBody' + _).height(Height / 10 + 'rem')
+                            }
+                        }
+                    }
+                }
+            }
+            tableBody.replaceChild(newBody, oldBody);
+            newBody.id = flag + 'oldBody' + _;        
+            if (Height == 0)
+                $('#' + flag + 'Header' + _).html('<div id="' + flag + 'oldHeader' + _ + '"></div>')        
+            for (var d in last.persons) {
+                var a = last.persons[d];
+                var userName = a.name.replace(/ /g, "").replace("(", "").replace(")", "").replace(/'/g, "_");
+                if (init.q.pets == 1 && a.Job == 'AVA' || a.Class == '') {} else
+                    inputGraph(userName, flag, a.parent.maxdamage, a)
+            }
         }
     }
 }
