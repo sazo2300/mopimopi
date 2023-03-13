@@ -3727,7 +3727,7 @@ l = {
             tt: {
                 EN: "Background Color",
             },
-            i: "signal_cellular_4_bar",
+            i: "color_lens",
             e: "li_checkbox",
             ul: 1
         },
