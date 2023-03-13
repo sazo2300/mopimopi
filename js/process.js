@@ -721,11 +721,11 @@ function addOverallData(){
     let resObj = { lastDPS: {Encounter: {}}, lastHPS: {Encounter: {}}}
     let dontTouch = {}
     if(relevantEncounters.length > 0) dontTouch = relevantEncounters[0]
-    resObj.lastDPS.Encounter = populateOuterObjects(resObj.lastDPS.Encounter, dontTouch.lastDPS, true)
-    resObj.lastHPS.Encounter = populateOuterObjects(resObj.lastHPS.Encounter, dontTouch.lastHPS, true)
+    resObj.lastDPS.Encounter = populateOuterObjects(resObj.lastDPS, dontTouch.lastDPS, true)
+    resObj.lastHPS.Encounter = populateOuterObjects(resObj.lastHPS, dontTouch.lastHPS, true)
     for(let i = 1; i < relevantEncounters.length; i++){
-        resObj.lastDPS.Encounter = populateOuterObjects(resObj.lastDPS.Encounter, relevantEncounters[i].lastDPS)
-        resObj.lastHPS.Encounter = populateOuterObjects(resObj.lastHPS.Encounter, relevantEncounters[i].lastHPS)
+        resObj.lastDPS.Encounter = populateOuterObjects(resObj.lastDPS, relevantEncounters[i].lastDPS)
+        resObj.lastHPS.Encounter = populateOuterObjects(resObj.lastHPS, relevantEncounters[i].lastHPS)
 
         for (var d in resObj.lastDPS.persons) {
             var a = resObj.lastDPS.persons[d];
@@ -801,14 +801,14 @@ function addOverallData(){
 
 function populateOuterObjects(a, b, init = false){
     if(init){
-        a["DAMAGE-b"] = b.Encounter["DAMAGE-b"]
-        a["DAMAGE-k"] = b.Encounter["DAMAGE-k"]
-        a["DAMAGE-m"] = b.Encounter["DAMAGE-m"]
-        a["DURATION"] = b.Encounter["DURATION"]
-        a["damage"] = b.Encounter["damage"]
-        a["damage-m"] = b.Encounter["damage-m"]
-        a["healed"] = b.Encounter["healed"]
-        a["swings"] = b.Encounter["swings"]
+        a.Encounter["DAMAGE-b"] = b.Encounter["DAMAGE-b"]
+        a.Encounter["DAMAGE-k"] = b.Encounter["DAMAGE-k"]
+        a.Encounter["DAMAGE-m"] = b.Encounter["DAMAGE-m"]
+        a.Encounter["DURATION"] = b.Encounter["DURATION"]
+        a.Encounter["damage"] = b.Encounter["damage"]
+        a.Encounter["damage-m"] = b.Encounter["damage-m"]
+        a.Encounter["healed"] = b.Encounter["healed"]
+        a.Encounter["swings"] = b.Encounter["swings"]
 
         for (const [key, value] of Object.entries(b.persons)) {
             let person = b.persons[key];
@@ -820,17 +820,17 @@ function populateOuterObjects(a, b, init = false){
         }
     } else {
             //number fields for encounter
-            a["DAMAGE-b"] += b.Encounter["DAMAGE-b"]
-            a["DAMAGE-k"] += b.Encounter["DAMAGE-k"]
-            a["DAMAGE-m"] += b.Encounter["DAMAGE-m"]
-            a["DURATION"] += b.Encounter["DURATION"]
-            a["damage"] += b.Encounter["damage"]
-            a["damage-m"] += b.Encounter["damage-m"]
-            a["healed"] += b.Encounter["healed"]
-            a["swings"] += b.Encounter["swings"]
+            a.Encounter["DAMAGE-b"] += b.Encounter["DAMAGE-b"]
+            a.Encounter["DAMAGE-k"] += b.Encounter["DAMAGE-k"]
+            a.Encounter["DAMAGE-m"] += b.Encounter["DAMAGE-m"]
+            a.Encounter["DURATION"] += b.Encounter["DURATION"]
+            a.Encounter["damage"] += b.Encounter["damage"]
+            a.Encounter["damage-m"] += b.Encounter["damage-m"]
+            a.Encounter["healed"] += b.Encounter["healed"]
+            a.Encounter["swings"] += b.Encounter["swings"]
             //text fields for encounter
-            if(a["DURATION"] == 0) a["DURATION"] = 1
-            a["duration"] = (Math.floor(a["DURATION"]/60).toString() + ":" + (a["DURATION"]-(Math.floor(a["DURATION"]/60)*60).toString()))
+            if(a.Encounter["DURATION"] == 0) a.Encounter["DURATION"] = 1
+            a.Encounter["duration"] = (Math.floor(a.Encounter["DURATION"]/60).toString() + ":" + (a.Encounter["DURATION"]-(Math.floor(a.Encounter["DURATION"]/60)*60).toString()))
     }
             return a;
 }
