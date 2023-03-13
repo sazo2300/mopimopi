@@ -810,13 +810,13 @@ function populateOuterObjects(a, b, init = false){
         a["healed"] = b.Encounter["healed"]
         a["swings"] = b.Encounter["swings"]
 
-        for(let name of b.persons){
-            let person = b.persons[name];
+        for (const [key, value] of Object.entries(b.persons)) {
+            let person = b.persons[key];
             let clone = (({ parent, ...person }) => person)(person)
             if(!a.persons){
                 a.persons = {}
             }
-            a.persons[name] = JSON.parse(JSON.stringify(clone))
+            a.persons[key] = JSON.parse(JSON.stringify(clone))
         }
     } else {
             //number fields for encounter
