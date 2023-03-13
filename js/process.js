@@ -664,6 +664,7 @@ function historyAddRow() {
         wrap.appendChild(newHistory);
     else wrap.insertBefore(newHistory, oldHistory);
     newHistory.id = 'HISTORYoldBody';
+    console.log(wrap)
     $('#HISTORYBody .tableWrap').on({
         mouseover: function() {
             if (init.Range.bar == 0)
