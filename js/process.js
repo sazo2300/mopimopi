@@ -875,10 +875,17 @@ function addOverallData(counter){
         for (var d in resObj.lastDPS.persons) {
             var a = resObj.lastDPS.persons[d];
             var b = relevantEncounters[i].lastDPS.persons[d];
-            a = populateInnerObjects(a, b, resObj)
+            
+            let innerRes = populateInnerObjects(a, b, resObj)
+            if(innerRes){
+                a = innerRes
+            }
             var c = resObj.lastHPS.persons[d];
             var d = relevantEncounters[i].lastHPS.persons[d];
-            c = populateInnerObjects(c, d, resObj)
+            innerRes2 = populateInnerObjects(c, d, resObj)
+            if(innerRes2){
+                c = innerRes
+            }
         }
     }
     console.log(resObj)
@@ -989,6 +996,9 @@ function populateOuterObjects(a, b, init = false){
 }
 
 function populateInnerObjects(a, b, resObj){
+    if(!a || !b){
+        return false;
+    }
                 //number fields for encounter
                 a["DAMAGE-b"] += b["DAMAGE-b"] ? b["DAMAGE-b"] : 0
                 a["DAMAGE-k"] += b["DAMAGE-k"]
