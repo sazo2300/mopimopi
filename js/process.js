@@ -1010,6 +1010,7 @@ function populateInnerObjects(a, b, resObj){
                 a["mergedCritheals"] += b["mergedCritheals"]
                 a["mergedSwings"] += b["mergedSwings"]
                 a["overHeal"] += b["overHeal"]
+                a["deaths"] += b["deaths"]
     
                 //text fields for encounter
                 if(a["DURATION"] == 0) a["DURATION"] = 1
