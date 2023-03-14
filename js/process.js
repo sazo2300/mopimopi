@@ -987,6 +987,8 @@ function populateOuterObjects(a, b, init = false){
             a.Encounter.encdps = pFloat(a.Encounter["damage"] / a.Encounter["DURATION"]);
             a.Encounter.hps = pFloat(a.Encounter["healed"] / a.Encounter["DURATION"]);
             a.Encounter.enchps = pFloat(a.Encounter["healed"] / a.Encounter["DURATION"]);
+            a.Encounter.ENCDPS = Math.floor(a.Encounter.encdps);
+            a.Encounter.ENCHPS = Math.floor(a.Encounter.enchps);
     }
             return a;
 }
