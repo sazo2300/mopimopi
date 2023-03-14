@@ -942,7 +942,7 @@ function addOverallData(counter){
 
 function populateOuterObjects(a, b, init = false){
     if(init){
-        a.Encounter["DAMAGE-b"] = b.Encounter["DAMAGE-b"] ? b.Encounter["DAMAGE-b"] : 0
+        a.Encounter["DAMAGE-b"] = b.Encounter["DAMAGE-b"]
         a.Encounter["DAMAGE-k"] = b.Encounter["DAMAGE-k"]
         a.Encounter["DAMAGE-m"] = b.Encounter["DAMAGE-m"]
         a.Encounter["DURATION"] = b.Encounter["DURATION"]
@@ -968,7 +968,7 @@ function populateOuterObjects(a, b, init = false){
         }
     } else {
             //number fields for encounter
-            a.Encounter["DAMAGE-b"] += b.Encounter["DAMAGE-b"] ? b.Encounter["DAMAGE-b"] : 0
+            a.Encounter["DAMAGE-b"] += b.Encounter["DAMAGE-b"]
             a.Encounter["DAMAGE-k"] += b.Encounter["DAMAGE-k"]
             a.Encounter["DAMAGE-m"] += b.Encounter["DAMAGE-m"]
             a.Encounter["DURATION"] += b.Encounter["DURATION"]
