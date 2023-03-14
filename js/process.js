@@ -873,13 +873,17 @@ function addOverallData(counter){
         resObj.lastHPS = populateOuterObjects(resObj.lastHPS, relevantEncounters[i].lastHPS)
 
         for (var d in resObj.lastDPS.persons) {
-            console.log(resObj, relevantEncounters[i])
-            var a = resObj.lastDPS.persons[d];
-            var b = relevantEncounters[i].lastDPS.persons[d];
-            a = populateInnerObjects(a, b, resObj)
-            var c = resObj.lastHPS.persons[d];
-            var d = relevantEncounters[i].lastHPS.persons[d];
-            c = populateInnerObjects(c, d, resObj)
+            try{
+                console.log(resObj, relevantEncounters[i])
+                var a = resObj.lastDPS.persons[d];
+                var b = relevantEncounters[i].lastDPS.persons[d];
+                a = populateInnerObjects(a, b, resObj)
+                var c = resObj.lastHPS.persons[d];
+                var d = relevantEncounters[i].lastHPS.persons[d];
+                c = populateInnerObjects(c, d, resObj)
+            } catch(err){
+                console.log(err, [resObj.lastDPS.persons[d], relevantEncounters[i].lastDPS.persons[d], resObj.lastHPS.persons[d], relevantEncounters[i].lastHPS.persons[d]])
+            }
         }
     }
 
