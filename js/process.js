@@ -810,6 +810,7 @@ function historyAddRow() {
     barBg.className = "barBg";
     newHistory.appendChild(table);
     newHistory.appendChild(barBg);
+    oldHistory = document.getElementById('HISTORYoldBody');
     if (oldHistory == null)
         wrap.appendChild(newHistory);
     else wrap.insertBefore(newHistory, oldHistory);
