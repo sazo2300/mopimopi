@@ -812,8 +812,8 @@ function historyAddRow() {
     newHistory.appendChild(barBg);
     if (oldHistory == null)
         wrap.appendChild(newHistory);
-        if(newHistory2) wrap.insertBefore(newHistory2, oldHistory)
     else wrap.insertBefore(newHistory, oldHistory);
+    if(newHistory2) wrap.insertBefore(newHistory2, newHistory)
     newHistory.id = 'HISTORYoldBody';
     $('#HISTORYBody .tableWrap').on({
         mouseover: function() {
