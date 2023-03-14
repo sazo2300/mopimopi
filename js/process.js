@@ -332,7 +332,7 @@ function onCombatDataUpdate(flag, last) {
                             a["healed%"] = pFloat(a.mergedHealed / (last.Encounter.healed - totalOverheal) * 100);
                             a.healedPct = pFloat(a.mergedHealed / (last.Encounter.healed - totalOverheal) * 100);
                             a.mergedHealed = a.healed - a.overHeal
-                            a.enchps = parseFloat(((a.healed - a.overHeal) / last.DURATION).nanFix().toFixed(underDot))
+                            a.enchps = parseFloat(((a.healed - a.overHeal) / last.Encounter.DURATION).nanFix().toFixed(underDot))
                             //a.hps = parseFloat(((a.healed - a.overHeal) / a.parent.DURATION).nanFix().toFixed(underDot))
                             createTableBody(userName, flag, newBody, a);
                             if (Height < parseFloat(bodyHeight * init.Range.sizeHPSTable)) {
