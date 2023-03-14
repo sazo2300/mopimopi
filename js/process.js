@@ -855,7 +855,7 @@ function addOverallData(counter){
     let currentCounter = -1;
     for(let i = 0; i < encounterArray.length; i++){
         if(encounterArray[i].lastDPS.zone == lastDPS.zone){
-            if(!encounterArray[i].lastDPS.overallData){
+            if(!encounterArray[i].lastDPS.overallData && encounterArray[i].lastDPS.persons && encounterArray[i].lastHPS.persons){
                 relevantEncounters.push(encounterArray[i]);
             }
         }else{
