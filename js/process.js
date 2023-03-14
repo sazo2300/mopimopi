@@ -857,6 +857,7 @@ function addOverallData(counter){
         if(encounterArray[i].lastDPS.zone == lastDPS.zone){
             if(!encounterArray[i].lastDPS.overallData){
                 relevantEncounters.push(encounterArray[i]);
+                console.log(encounterArray[i])
             }
         }else{
             break;
@@ -989,7 +990,7 @@ function populateOuterObjects(a, b, init = false){
 
 function populateInnerObjects(a, b, resObj){
                 //number fields for encounter
-                a["DAMAGE-b"] += b["DAMAGE-b"]
+                a["DAMAGE-b"] += b["DAMAGE-b"] ? b["DAMAGE-b"] : 0
                 a["DAMAGE-k"] += b["DAMAGE-k"]
                 a["DAMAGE-m"] += b["DAMAGE-m"]
                 a["DURATION"] += b["DURATION"]
