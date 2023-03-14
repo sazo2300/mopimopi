@@ -857,7 +857,6 @@ function addOverallData(counter){
         if(encounterArray[i].lastDPS.zone == lastDPS.zone){
             if(!encounterArray[i].lastDPS.overallData){
                 relevantEncounters.push(encounterArray[i]);
-                console.log(encounterArray[i])
             }
         }else{
             break;
@@ -873,22 +872,15 @@ function addOverallData(counter){
         resObj.lastHPS = populateOuterObjects(resObj.lastHPS, relevantEncounters[i].lastHPS)
 
         for (var d in resObj.lastDPS.persons) {
+            console.log(resObj, relevantEncounters[i])
             var a = resObj.lastDPS.persons[d];
             var b = relevantEncounters[i].lastDPS.persons[d];
-            
-            let innerRes = populateInnerObjects(a, b, resObj)
-            if(innerRes){
-                a = innerRes
-            }
+            a = populateInnerObjects(a, b, resObj)
             var c = resObj.lastHPS.persons[d];
             var d = relevantEncounters[i].lastHPS.persons[d];
-            innerRes2 = populateInnerObjects(c, d, resObj)
-            if(innerRes2){
-                c = innerRes
-            }
+            c = populateInnerObjects(c, d, resObj)
         }
     }
-    console.log(resObj)
 
     encounterArray.unshift({
         lastDPS: resObj.lastDPS,
@@ -996,9 +988,6 @@ function populateOuterObjects(a, b, init = false){
 }
 
 function populateInnerObjects(a, b, resObj){
-    if(!a || !b){
-        return false;
-    }
                 //number fields for encounter
                 a["DAMAGE-b"] += b["DAMAGE-b"] ? b["DAMAGE-b"] : 0
                 a["DAMAGE-k"] += b["DAMAGE-k"]
