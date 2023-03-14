@@ -874,7 +874,6 @@ function addOverallData(counter){
 
         for (var d in resObj.lastDPS.persons) {
             try{
-                console.log(resObj, relevantEncounters[i])
                 var a = resObj.lastDPS.persons[d];
                 var b = relevantEncounters[i].lastDPS.persons[d];
                 a = populateInnerObjects(a, b, resObj)
