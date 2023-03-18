@@ -1184,9 +1184,12 @@ function addOverallData(counter) {
   }
   rankArray = calculateRanks(rankArray);
   for (var d in rankArray) {
+    console.log(rankArray, d)
     var a = resObj.lastDPS.persons[d.name];
+    console.log(resObj.lastDPS, a)
     a.rank = d.dpsRank;
     var b = resObj.lastHPS.persons[d.name];
+    console.log(resObj.lastHPS, b)
     b.rank = d.hpsRank;
   }
   encounterArray.unshift({
