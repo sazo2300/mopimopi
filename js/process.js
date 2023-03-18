@@ -1184,16 +1184,14 @@ function addOverallData(counter) {
   }
   rankArray = calculateRanks(rankArray);
   for (var d in resObj.lastDPS.persons) {
-    var a = resObj.lastDPS.persons[d];
     let b = rankArray.filter(i => i.name == a.name)[0]
-    a.rank = b.dpsRank;
+    resObj.lastDPS.persons[d].rank = b.dpsRank;
   }
   for (var d in resObj.lastHPS.persons) {
-    var a = resObj.lastHPS.persons[d];
     let b = rankArray.filter(i => i.name == a.name)[0]
-    a.rank = b.hpsRank;
+    resObj.lastHPS.persons[d].rank = b.hpsRank;
   }
-  
+
   encounterArray.unshift({
     lastDPS: resObj.lastDPS,
     lastHPS: resObj.lastHPS,
