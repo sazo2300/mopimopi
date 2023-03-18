@@ -1380,12 +1380,11 @@ function populateInnerObjects(a, b, resObj) {
 }
 
 function calculateRanks(arr) {
-  console.log(products);
-  arr = products.sort((a, b) => (a.dps < b.dps ? 1 : a.dps > b.dps ? -1 : 0));
+  arr = arr.sort((a, b) => (a.dps < b.dps ? 1 : a.dps > b.dps ? -1 : 0));
   for (let i = 0; i < arr.length; i++) {
     arr[i].dpsRank = i;
   }
-  arr = products.sort((a, b) => (a.hps < b.hps ? 1 : a.hps > b.hps ? -1 : 0));
+  arr = arr.sort((a, b) => (a.hps < b.hps ? 1 : a.hps > b.hps ? -1 : 0));
   for (let i = 0; i < arr.length; i++) {
     arr[i].hpsRank = i;
   }
