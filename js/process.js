@@ -1176,9 +1176,9 @@ function addOverallData(counter) {
     var a = resObj.lastDPS.persons[d];
     rankArray.push({
       name: a.name,
-      dps: ENCDPS,
+      dps: a.ENCDPS,
       dpsRank: 0,
-      hps: ENCHPS,
+      hps: a.ENCHPS,
       hpsRank: 0,
     });
   }
